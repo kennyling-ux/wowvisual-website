@@ -21,12 +21,12 @@ Already set up from the CLI:
 
 Still to do:
 
-1. **`RESEND_API_KEY`**: create a key at resend.com, then Vercel → Project → **Settings → Environment Variables** → add it for Production (+ Preview if wanted) and redeploy. Until then the form shows the WhatsApp fallback with the message prefilled (verified on production: the API answers `503 email_unavailable`).
+1. ~~`RESEND_API_KEY`~~ Done (2026-10-21): set in Vercel Production (sensitive). Resend domain `wowvisual.my` verified in the **mo-frame** Resend team; create/rotate keys there.
 2. ~~Primary domain~~ Done: `www.wowvisual.my` 308-redirects to `wowvisual.my` (path kept).
 
 ### 1.2 Domain (Hostinger → Vercel)
 
-Done for the website (2026-10-21): `@` → `76.76.21.21`, `www` → `cname.vercel-dns.com`, SSL issued. Only the Resend records (step 2) remain.
+All done (2026-10-21): `@` → `76.76.21.21`, `www` → `cname.vercel-dns.com`, SSL issued; Resend records `resend._domainkey` (TXT), `rsend` + `send` (CNAME), `_dmarc` (TXT) added and verified.
 
 1. Hostinger hPanel → Domains → wowvisual.my → **DNS records**: delete the parking `A` record on `@` and the `CNAME` on `www`, then add:
    - `A` `@` → `76.76.21.21`
@@ -38,10 +38,10 @@ Done for the website (2026-10-21): `@` → `76.76.21.21`, `www` → `cname.verce
 
 ### 1.3 Launch checks (on the live URL)
 
-- [ ] Submit the contact form → email arrives at wowvisualofficial@gmail.com.
-- [ ] With `RESEND_API_KEY` unset (e.g. a preview), the form offers WhatsApp with the message prefilled.
+- [x] Submit the contact form → email arrives at wowvisualofficial@gmail.com. (Test enquiry "Website test (Brewdes)" sent from the live site 2026-10-21; Resend status Delivered. Confirm it's in the inbox, not spam.)
+- [x] With `RESEND_API_KEY` unset (e.g. a preview), the form offers WhatsApp with the message prefilled. (API returned `503 email_unavailable` before the key was added.)
 - [ ] WhatsApp buttons open the chat on a phone (iOS + Android).
-- [ ] Run https://pagespeed.web.dev on `/` and `/work` (mobile) and note the scores. See §3.
+- [x] PageSpeed Insights on `/` and `/work` (mobile): see §3.
 - [ ] Vercel → Analytics / Speed Insights show data (they only load on Vercel).
 
 ---
