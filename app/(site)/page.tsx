@@ -1,12 +1,14 @@
 import { Eyebrow } from "@/components/ui/eyebrow";
 import { Section } from "@/components/ui/section";
+import { AboutStatement } from "@/components/sections/about-statement";
 import { Hero } from "@/components/sections/hero";
+import { ImageStrip } from "@/components/sections/image-strip";
 import { MarqueeStrip } from "@/components/sections/marquee-strip";
+import { Stats } from "@/components/sections/stats";
 import { TrustStrip } from "@/components/sections/trust-strip";
 
-// TEMPORARY anchor stubs — replaced in Phases 4–7.
+// TEMPORARY anchor stubs — replaced in Phases 5–7.
 const stubs = [
-  { id: "about", eyebrow: "Who we are", title: "About" },
   { id: "services", eyebrow: "Services", title: "What we make" },
   { id: "process", eyebrow: "Process", title: "How we work" },
   { id: "contact", eyebrow: "Contact", title: "Start a project" },
@@ -20,6 +22,9 @@ export default function Home() {
       <div className="pt-10 md:pt-16">
         <MarqueeStrip />
       </div>
+      <AboutStatement />
+      <ImageStrip />
+      <Stats />
 
       {stubs.map((s) => (
         <Section key={s.id} id={s.id} className="border-border border-b">

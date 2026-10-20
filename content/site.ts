@@ -78,6 +78,60 @@ export const marquee = {
   label: "What we make",
 } as const;
 
+export const about = {
+  id: "about",
+  eyebrow: "Who we are",
+  statement:
+    "We're a Kuala Lumpur production studio turning ideas into films that sell, inform and move people.", // [CONFIRM]
+  link: { label: "About the studio", href: "/#services" }, // [CONFIRM] no About page in v1 — points to Services
+} as const;
+
+/**
+ * Image strip (§6.6) — 4–6 behind-the-scenes stills / frames, 3:4, in /public/images.
+ * [CONFIRM] Until real stills are supplied, cinematic placeholder frames are shown
+ * (decorative, no claims). Add items as { src: "/images/bts-01.jpg", alt: "…" }.
+ */
+export const imageStrip = {
+  label: "Behind the scenes",
+  images: [] as { src: string; alt: string }[],
+  placeholderCount: 6,
+};
+
+/**
+ * Stats (§6.7). [CONFIRM] ALL numbers with the client — never invent them.
+ * A stat with `value: null` is not shown; the section is hidden until at least one is set.
+ */
+// [CONFIRM] descriptions too
+export const stats = {
+  eyebrow: "In numbers",
+  items: [
+    {
+      value: null as number | null,
+      suffix: "+",
+      label: "Projects delivered",
+      description: "Commercials, corporate films and event coverage.",
+    },
+    {
+      value: null as number | null,
+      suffix: "+",
+      label: "Brands served",
+      description: "Brands we have filmed for across Malaysia.",
+    },
+    {
+      value: null as number | null,
+      suffix: "+",
+      label: "Years of experience",
+      description: "Behind the camera and in the edit suite.",
+    },
+    {
+      value: null as number | null,
+      suffix: "",
+      label: "Videos on YouTube",
+      description: "Published on our channel — and counting.",
+    },
+  ],
+};
+
 export const footer = {
   tagline: "Commercials, corporate films, events and social content from Kuala Lumpur.", // [CONFIRM]
   backToTop: "Back to top",
