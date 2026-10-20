@@ -2,18 +2,18 @@ import { Eyebrow } from "@/components/ui/eyebrow";
 import { Section } from "@/components/ui/section";
 import { AboutStatement } from "@/components/sections/about-statement";
 import { FeaturedWork } from "@/components/sections/featured-work";
+import { FinalCta } from "@/components/sections/final-cta";
 import { Hero } from "@/components/sections/hero";
 import { ImageStrip } from "@/components/sections/image-strip";
 import { MarqueeStrip } from "@/components/sections/marquee-strip";
+import { Process } from "@/components/sections/process";
+import { Services } from "@/components/sections/services";
 import { Stats } from "@/components/sections/stats";
+import { Testimonials } from "@/components/sections/testimonials";
 import { TrustStrip } from "@/components/sections/trust-strip";
 
-// TEMPORARY anchor stubs — replaced in Phases 6–7.
-const stubs = [
-  { id: "services", eyebrow: "Services", title: "What we make" },
-  { id: "process", eyebrow: "Process", title: "How we work" },
-  { id: "contact", eyebrow: "Contact", title: "Start a project" },
-];
+// TEMPORARY contact stub — replaced in Phase 7.
+const stubs = [{ id: "contact", eyebrow: "Contact", title: "Start a project" }];
 
 export default function Home() {
   return (
@@ -27,6 +27,10 @@ export default function Home() {
       <ImageStrip />
       <Stats />
       <FeaturedWork />
+      <Services />
+      <Process />
+      <Testimonials />
+      <FinalCta />
 
       {stubs.map((s) => (
         <Section key={s.id} id={s.id} className="border-border border-b">

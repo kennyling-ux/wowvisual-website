@@ -19,10 +19,12 @@ export function FeaturedWork() {
           <Reveal>
             <Eyebrow>{workCopy.home.eyebrow}</Eyebrow>
           </Reveal>
-          <SplitHeadline as="h2" text={workCopy.home.title} className="text-h2 mt-4" />
-          <span id="featured-heading" className="sr-only">
-            {workCopy.home.title}
-          </span>
+          <SplitHeadline
+            as="h2"
+            id="featured-heading"
+            text={workCopy.home.title}
+            className="text-h2 mt-4"
+          />
         </div>
         <Reveal>
           <TextLink href="/work" arrow="trailing">

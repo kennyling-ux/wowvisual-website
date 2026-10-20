@@ -11,6 +11,7 @@ type SplitHeadlineProps = {
   /** "mount" animates on load (hero), "view" when scrolled into view */
   trigger?: "mount" | "view";
   delay?: number;
+  id?: string;
 };
 
 /**
@@ -23,6 +24,7 @@ export function SplitHeadline({
   className,
   trigger = "view",
   delay = 0,
+  id,
 }: SplitHeadlineProps) {
   const words = text.split(" ");
   const animateProps =
@@ -32,7 +34,7 @@ export function SplitHeadline({
 
   return createElement(
     as,
-    { "aria-label": text, className },
+    { "aria-label": text, className, id },
     <motion.span
       aria-hidden
       className="block"
@@ -41,7 +43,7 @@ export function SplitHeadline({
     >
       {words.map((word, i) => (
         <Fragment key={i}>
-          <span className="-mb-[0.08em] inline-block overflow-hidden pb-[0.08em] align-bottom">
+          <span className="-mb-[0.2em] inline-block overflow-hidden pb-[0.2em] align-bottom">
             <motion.span
               data-reveal
               className="inline-block will-change-transform"

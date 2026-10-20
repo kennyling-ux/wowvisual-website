@@ -289,6 +289,37 @@
   }
 }
 
+/* ── Final CTA glow (§6.12) ──────────────────────────────── */
+.cta-glow {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(
+      30% 45% at 50% 55%,
+      color-mix(in oklab, var(--accent) 70%, transparent),
+      transparent 70%
+    ),
+    radial-gradient(
+      22% 30% at 58% 45%,
+      color-mix(in oklab, #ff7a3d 45%, transparent),
+      transparent 70%
+    );
+  filter: blur(40px);
+  animation: cta-glow 9s var(--ease-in-out-film) infinite alternate;
+}
+
+@keyframes cta-glow {
+  from {
+    opacity: 0.55;
+    transform: scale(0.9) translate3d(-3%, 2%, 0);
+  }
+  to {
+    opacity: 0.9;
+    transform: scale(1.15) translate3d(3%, -2%, 0);
+  }
+}
+
 /* ── Page fade (§9) ───────────────────────────────────────── */
 @keyframes page-in {
   from {

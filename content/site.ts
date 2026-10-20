@@ -132,6 +132,111 @@ export const stats = {
   ],
 };
 
+/**
+ * Services (§6.9). [CONFIRM] final list, order and descriptions with the client.
+ * `category` links the row to /work?category=…; `previewYoutubeId` borrows a real
+ * frame from the channel for the hover/accordion preview (or set `image` in /public/images).
+ */
+export const services = {
+  id: "services",
+  eyebrow: "Services",
+  title: "What we make",
+  intro: "One team from first idea to final export — so the film you approve is the film you get.", // [CONFIRM]
+  viewWork: "See the work",
+  askAbout: "Ask us about it",
+  items: [
+    {
+      name: "TVC & commercial video",
+      description: "Broadcast and online commercials, from script to final grade.",
+      category: "commercial",
+      previewYoutubeId: "f8CiYaB2Hds",
+    },
+    {
+      name: "Corporate & brand films",
+      description: "Company profiles, brand stories and recruitment films.",
+      category: "corporate",
+      previewYoutubeId: "eLljJlXoEis",
+    },
+    {
+      name: "Event coverage & highlights",
+      description: "Multi-camera coverage and highlight reels of your event.",
+      category: "event",
+      previewYoutubeId: "VQY-Bkm3nSE",
+    },
+    {
+      name: "Social media content",
+      description: "Reels, TikTok and Shorts made vertical-first to stop the scroll.",
+      category: "social",
+      previewYoutubeId: "bUChY8Wv6y4",
+    },
+    {
+      name: "Motion graphics & animation",
+      description: "Titles, explainers and animated brand assets.",
+      category: undefined,
+      previewYoutubeId: undefined,
+    },
+    {
+      name: "Product & lifestyle photography",
+      description: "Stills for campaigns, e-commerce and social.",
+      category: undefined,
+      previewYoutubeId: undefined,
+    },
+  ] as {
+    name: string;
+    description: string;
+    category?: string;
+    previewYoutubeId?: string;
+    image?: string;
+  }[],
+};
+
+/** Process (§6.10). [CONFIRM] descriptions. */
+export const processSteps = {
+  id: "process",
+  eyebrow: "Process",
+  title: "How we work",
+  steps: [
+    {
+      title: "Brief & concept",
+      description:
+        "We learn your goals, audience and budget, then shape a concept you can sign off.",
+    },
+    {
+      title: "Pre-production",
+      description:
+        "Script, storyboard, casting, locations and schedule — locked before the camera rolls.",
+    },
+    {
+      title: "Production / shoot",
+      description:
+        "Our crew captures it with professional camera, lighting and sound, on location or in studio.",
+    },
+    {
+      title: "Post & delivery",
+      description: "Edit, colour, sound and motion graphics, delivered in every format you need.",
+    },
+  ],
+};
+
+/**
+ * Testimonials (§6.11). [CONFIRM] Only real quotes with permission — the section is
+ * hidden while this list is empty.
+ */
+export const testimonials = {
+  eyebrow: "Kind words",
+  label: "Client testimonials",
+  prev: "Previous testimonial",
+  next: "Next testimonial",
+  items: [] as { quote: string; name: string; role?: string; company?: string }[],
+};
+
+export const finalCta = {
+  headline: "Let’s make something wow.",
+  sub: "Tell us about your project — we usually start with a quick WhatsApp chat.", // [CONFIRM]
+  whatsapp: "WhatsApp us",
+  email: "Email us",
+} as const;
+
 export const footer = {
   tagline: "Commercials, corporate films, events and social content from Kuala Lumpur.", // [CONFIRM]
   backToTop: "Back to top",
