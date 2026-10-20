@@ -3,7 +3,7 @@
  * Usage: pnpm screenshots [baseUrl] [route ...]
  *   pnpm screenshots                         -> http://localhost:3000, default routes
  *   pnpm screenshots http://localhost:3000 /styleguide
- * Output: /screenshots/{route}-{width}-{theme}.png (git-ignored)
+ * Output: /screenshots/{route}-{width}-{theme}.png + -fold.png (git-ignored)
  */
 import { chromium } from "@playwright/test";
 import { mkdir } from "node:fs/promises";
@@ -60,6 +60,8 @@ async function main() {
         const slug = route === "/" ? "home" : route.replace(/^\//, "").replace(/\//g, "_");
         const file = path.join(outDir, `${slug}-${width}-${theme}.png`);
         await page.screenshot({ path: file, fullPage: true });
+        // Above-the-fold capture (checks primary CTA visibility)
+        await page.screenshot({ path: file.replace(/\.png$/, "-fold.png") });
         console.log("✓", path.relative(process.cwd(), file));
       }
       await context.close();

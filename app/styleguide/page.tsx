@@ -93,7 +93,7 @@ function Block({
 
 export default function StyleguidePage() {
   return (
-    <main id="main" className="pb-24">
+    <main id="main" tabIndex={-1} className="pb-24 outline-none">
       {/* Header bar */}
       <div className="border-border bg-bg/80 sticky top-0 z-40 border-b backdrop-blur-xl">
         <Container className="flex h-(--header-h) items-center justify-between gap-4">

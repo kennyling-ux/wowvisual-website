@@ -23,10 +23,10 @@ export const site = {
     whatsappHref: `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`,
     responseTime: "We reply within 1 working day", // [CONFIRM]
   },
-  socials: {
-    youtube: "https://youtube.com/@wowvisualofficial",
-    // [CONFIRM] Instagram / Facebook / TikTok / LinkedIn
-  },
+  socials: [
+    { label: "YouTube", href: "https://youtube.com/@wowvisualofficial" },
+    // [CONFIRM] Instagram / Facebook / TikTok / LinkedIn — add as { label, href }
+  ],
 } as const;
 
 export const nav = {
@@ -38,6 +38,16 @@ export const nav = {
     { label: "Contact", href: "/#contact" },
   ],
   cta: { label: "Start a project", href: "/#contact" },
+} as const;
+
+export const footer = {
+  tagline: "Commercials, corporate films, events and social content from Kuala Lumpur.", // [CONFIRM]
+  backToTop: "Back to top",
+  privacyLabel: "Privacy",
+} as const;
+
+export const floatingWhatsApp = {
+  label: "Chat with us on WhatsApp",
 } as const;
 
 export function whatsappLink(message: string = whatsappMessage) {
