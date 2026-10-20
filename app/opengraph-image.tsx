@@ -9,13 +9,13 @@ export const alt = `${site.name} — ${hero.headline}`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
+// Fonts live in the repo (not node_modules) so they're bundled with the route
+// on Vercel; read once at module scope.
 const font = (w: 500 | 600) =>
-  readFile(
-    join(process.cwd(), `node_modules/@fontsource/inter/files/inter-latin-${w}-normal.woff`),
-  );
+  readFile(join(process.cwd(), `assets/fonts/inter-latin-${w}-normal.woff`));
+const [medium, semibold] = await Promise.all([font(500), font(600)]);
 
 export default async function Image() {
-  const [medium, semibold] = await Promise.all([font(500), font(600)]);
   return new ImageResponse(
     <div
       style={{
