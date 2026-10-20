@@ -21,7 +21,7 @@ function Word({
   const opacity = useTransform(progress, [start, end], [0, 1]);
   return (
     <span className="relative inline-block">
-      <span className="text-fg-faint">{word}</span>
+      <span className="text-fg-dim">{word}</span>
       {/* data-reveal: fully filled without JS and under reduced motion */}
       <motion.span data-reveal className="text-fg absolute inset-0" style={{ opacity }}>
         {word}
@@ -31,7 +31,7 @@ function Word({
 }
 
 /**
- * Statement whose words fill from --fg-faint to --fg as it scrolls through the
+ * Statement whose words fill from --fg-dim to --fg as it scrolls through the
  * viewport (§6.5). Opacity-only; the real sentence is kept for screen readers.
  */
 export function ScrollFillText({

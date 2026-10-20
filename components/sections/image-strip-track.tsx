@@ -19,7 +19,7 @@ export function ImageStripTrack({ children, label }: { children: ReactNode; labe
       role="region"
       aria-label={label}
       tabIndex={0}
-      className="snap-x snap-mandatory scroll-px-(--container-pad) [scrollbar-width:none] overflow-x-auto overscroll-x-contain md:snap-none md:overflow-visible [&::-webkit-scrollbar]:hidden"
+      className="rounded-card snap-x snap-mandatory scroll-px-(--container-pad) [scrollbar-width:none] overflow-x-auto overscroll-x-contain focus-visible:outline-offset-[-3px] md:snap-none md:overflow-visible [&::-webkit-scrollbar]:hidden"
     >
       <motion.ul
         style={{ "--drift": drift } as never}

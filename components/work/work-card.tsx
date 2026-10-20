@@ -34,7 +34,6 @@ export function WorkCard({
           origin: e.currentTarget.getBoundingClientRect(),
         })
       }
-      aria-label={`${workCopy.card.watch}: ${item.title}${item.client ? ` — ${item.client}` : ""} (${item.category})`}
       className="group/card rounded-card bg-hero-ink relative block aspect-video w-full overflow-hidden text-left text-white"
     >
       <Image
@@ -52,6 +51,7 @@ export function WorkCard({
         className="absolute inset-0 bg-[linear-gradient(to_top,rgb(0_0_0/0.75),rgb(0_0_0/0.1)_55%,transparent)] transition-colors duration-500 group-hover/card:bg-black/30"
       />
 
+      <span className="sr-only">{workCopy.card.watch}: </span>
       <span className="text-label absolute top-3 left-3 rounded-full border border-white/20 bg-black/35 px-3 py-1.5 text-white backdrop-blur-md md:top-4 md:left-4">
         {item.category}
       </span>

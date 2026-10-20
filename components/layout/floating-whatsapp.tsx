@@ -39,23 +39,25 @@ export function FloatingWhatsApp() {
   const show = pastHero && !contactVisible;
 
   return (
-    <AnimatePresence>
-      {show && (
-        <motion.a
-          key="wa"
-          href={site.contact.whatsappHref}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label={floatingWhatsApp.label}
-          initial={{ opacity: 0, scale: 0.6, y: 16 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.6, y: 16 }}
-          transition={{ duration: 0.35, ease: ease.out }}
-          className="bg-accent text-on-accent fixed right-4 bottom-[max(1rem,env(safe-area-inset-bottom))] z-40 grid size-14 place-items-center rounded-full shadow-[0_10px_30px_-8px_rgb(0_0_0/0.45)] md:hidden"
-        >
-          <WhatsAppIcon size={26} />
-        </motion.a>
-      )}
-    </AnimatePresence>
+    <aside aria-label={floatingWhatsApp.label}>
+      <AnimatePresence>
+        {show && (
+          <motion.a
+            key="wa"
+            href={site.contact.whatsappHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={floatingWhatsApp.label}
+            initial={{ opacity: 0, scale: 0.6, y: 16 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.6, y: 16 }}
+            transition={{ duration: 0.35, ease: ease.out }}
+            className="bg-accent text-on-accent fixed right-4 bottom-[max(1rem,env(safe-area-inset-bottom))] z-40 grid size-14 place-items-center rounded-full shadow-[0_10px_30px_-8px_rgb(0_0_0/0.45)] md:hidden"
+          >
+            <WhatsAppIcon size={26} />
+          </motion.a>
+        )}
+      </AnimatePresence>
+    </aside>
   );
 }

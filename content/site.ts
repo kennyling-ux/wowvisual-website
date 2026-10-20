@@ -75,7 +75,7 @@ export const trust = {
 
 export const marquee = {
   items: ["Commercials", "Corporate films", "Event coverage", "Social content", "Motion graphics"],
-  label: "What we make",
+  label: "Our craft",
 } as const;
 
 export const about = {

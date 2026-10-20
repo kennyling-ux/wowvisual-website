@@ -15,6 +15,8 @@
   --fg: #0a0a0a;
   --fg-muted: #5c5c5c;
   --fg-faint: #a3a3a3;
+  /* Greyed-out statement words before they fill — passes 3:1 as large text */
+  --fg-dim: #8a8a8a;
   --border: #e7e5e4;
   --accent: #d92d20;
   --accent-hover: #b42318;
@@ -37,6 +39,7 @@
   --fg: #f5f5f4;
   --fg-muted: #a3a3a3;
   --fg-faint: #525252;
+  --fg-dim: #666666;
   --border: #262626;
   /* Spec values #E5372B / #F04438 fail 4.5:1 with white text → adjusted */
   --accent: #d92d20;
@@ -58,6 +61,7 @@
   --color-fg: var(--fg);
   --color-fg-muted: var(--fg-muted);
   --color-fg-faint: var(--fg-faint);
+  --color-fg-dim: var(--fg-dim);
   --color-border: var(--border);
   --color-accent: var(--accent);
   --color-accent-hover: var(--accent-hover);
@@ -376,8 +380,11 @@
   }
 }
 
+/* Only for client-side navigations — never on first paint, so FCP/LCP aren't delayed */
 @utility animate-page-in {
-  animation: page-in 0.5s var(--ease-out-expo) both;
+  :where(html.nav-ready) & {
+    animation: page-in 0.5s var(--ease-out-expo) both;
+  }
 }
 
 /* Lenis */

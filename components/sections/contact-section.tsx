@@ -32,7 +32,7 @@ export function ContactSection() {
   return (
     <Section id={contact.id} aria-labelledby="contact-heading">
       <div className="grid gap-12 lg:grid-cols-12 lg:gap-10">
-        <div className="lg:col-span-5">
+        <div className="min-w-0 lg:col-span-5">
           <Reveal>
             <Eyebrow>{contact.eyebrow}</Eyebrow>
           </Reveal>
@@ -88,7 +88,7 @@ export function ContactSection() {
           </Reveal>
         </div>
 
-        <Reveal className="lg:col-span-7">
+        <Reveal className="min-w-0 lg:col-span-7">
           <div className="rounded-card border-border bg-surface border p-5 sm:p-8 md:p-10">
             <ContactForm />
           </div>

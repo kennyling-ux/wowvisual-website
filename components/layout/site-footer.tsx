@@ -13,7 +13,11 @@ export function SiteFooter() {
       <div className="container-site pt-16 pb-24 md:pt-24 md:pb-8">
         <div className="grid grid-cols-2 gap-x-6 gap-y-12 md:grid-cols-4 lg:grid-cols-12 lg:gap-8">
           <div className="col-span-2 flex flex-col gap-5 md:col-span-4 lg:col-span-4">
-            <Link href="/" aria-label="WOW VISUAL — home" className="-m-2 inline-flex w-fit p-2">
+            <Link
+              href="/"
+              aria-label="WOW VISUAL — home"
+              className="-m-2 inline-flex min-h-11 w-fit items-center p-2"
+            >
               <Logo />
             </Link>
             <p className="text-body measure text-fg-muted max-w-[36ch]">{footer.tagline}</p>

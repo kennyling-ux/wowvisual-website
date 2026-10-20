@@ -50,7 +50,7 @@ export function WorkBrowser({ items, categories, initial = "all" }: Props & { in
       <div
         role="group"
         aria-label={workCopy.page.filterLabel}
-        className="-mx-(--container-pad) mb-8 [scrollbar-width:none] overflow-x-auto px-(--container-pad) md:mb-12 [&::-webkit-scrollbar]:hidden"
+        className="-mx-(--container-pad) -mt-1.5 mb-7 [scrollbar-width:none] overflow-x-auto px-(--container-pad) py-1.5 md:mb-12 [&::-webkit-scrollbar]:hidden"
       >
         <ul className="flex w-max gap-2">
           {chips.map((chip) => {
@@ -97,7 +97,7 @@ export function WorkBrowser({ items, categories, initial = "all" }: Props & { in
 
       <motion.ul layout className="grid gap-4 sm:grid-cols-2 md:gap-6 lg:grid-cols-3">
         <AnimatePresence mode="popLayout" initial={false}>
-          {visible.map((item) => (
+          {visible.map((item, i) => (
             <motion.li
               key={item.slug}
               layout
@@ -109,6 +109,7 @@ export function WorkBrowser({ items, categories, initial = "all" }: Props & { in
               <WorkCard
                 item={item}
                 size="md"
+                priority={i < 3} // first row is the LCP on /work
                 sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
               />
             </motion.li>
