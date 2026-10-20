@@ -43,6 +43,13 @@ All done (2026-10-21): `@` → `76.76.21.21`, `www` → `cname.vercel-dns.com`, 
 - [ ] WhatsApp buttons open the chat on a phone (iOS + Android).
 - [x] PageSpeed Insights on `/` and `/work` (mobile): see §3.
 - [ ] Vercel → Analytics / Speed Insights show data (they only load on Vercel).
+- [ ] **Google Search Console** (needs the client's Google account). Google still shows the old Hostinger parking page ("No information is available for this page"); the live site is fine for Googlebot (200, no noindex, robots allows all).
+  1. search.google.com/search-console → Add property → **Domain** → `wowvisual.my`.
+  2. Copy the `google-site-verification=…` TXT value → Hostinger DNS → add `TXT`, Name `@`, that value, TTL 3600 (keep the existing records).
+  3. Back in Search Console → **Verify** (minutes, sometimes a few hours).
+  4. Sitemaps → submit `https://wowvisual.my/sitemap.xml`.
+  5. URL inspection → `https://wowvisual.my/` → **Request indexing**; repeat for `/work`.
+  The result usually updates within a day or two.
 
 ---
 
