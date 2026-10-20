@@ -22,11 +22,11 @@ Already set up from the CLI:
 Still to do:
 
 1. **`RESEND_API_KEY`**: create a key at resend.com, then Vercel → Project → **Settings → Environment Variables** → add it for Production (+ Preview if wanted) and redeploy. Until then the form shows the WhatsApp fallback with the message prefilled (verified on production: the API answers `503 email_unavailable`).
-2. Vercel → Project → **Settings → Domains**: set `wowvisual.my` as primary and make `www.wowvisual.my` redirect to it.
+2. ~~Primary domain~~ Done: `www.wowvisual.my` 308-redirects to `wowvisual.my` (path kept).
 
 ### 1.2 Domain (Hostinger → Vercel)
 
-Right now `wowvisual.my` and `www` still resolve to Hostinger parking (`2.57.91.91`, nameservers `*.dns-parking.com`).
+Done for the website (2026-10-21): `@` → `76.76.21.21`, `www` → `cname.vercel-dns.com`, SSL issued. Only the Resend records (step 2) remain.
 
 1. Hostinger hPanel → Domains → wowvisual.my → **DNS records**: delete the parking `A` record on `@` and the `CNAME` on `www`, then add:
    - `A` `@` → `76.76.21.21`
@@ -87,7 +87,12 @@ Filter chips on `/work` are generated from the categories in use. Thumbnails com
 | Home  | 93   | 100  | 100      | 100 | 3.0s | 0   | 50 ms |
 | /work | 99   | 100  | 100      | 100 | 1.8s | 0   | 20 ms |
 
-Re-run PageSpeed Insights on https://wowvisual.my after DNS switches over; that's the score of record.
+**PageSpeed Insights on https://wowvisual.my (score of record, 2026-10-21, mobile):**
+
+| Page  | Perf | A11y | Best Pr. | SEO | LCP  | CLS | TBT    |
+| ----- | ---- | ---- | -------- | --- | ---- | --- | ------ |
+| Home  | 93   | 100  | 100      | 100 | 2.8s | 0   | 130 ms |
+| /work | 96   | 100  | 100      | 100 | 2.7s | 0   | 70 ms  |
 
 Earlier local runs, on production builds:
 
