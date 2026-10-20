@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { BrandWordmark } from "@/components/ui/brand";
 import { Logo } from "@/components/ui/logo";
 import { footer, nav, site } from "@/content/site";
 import { BackToTop } from "./back-to-top";
@@ -76,11 +77,8 @@ export function SiteFooter() {
           </div>
         </div>
 
-        <div
-          aria-hidden
-          className="text-fg mt-16 overflow-hidden text-[clamp(2.75rem,14.2vw,14.5rem)] leading-[0.8] font-semibold tracking-[-0.06em] whitespace-nowrap select-none md:mt-24"
-        >
-          WOW VISUAL
+        <div aria-hidden className="text-fg mt-16 select-none md:mt-24">
+          <BrandWordmark className="h-auto w-full" />
         </div>
 
         <div className="border-border text-fg-muted mt-8 flex flex-col-reverse gap-4 border-t pt-6 text-sm md:flex-row md:items-center md:justify-between">

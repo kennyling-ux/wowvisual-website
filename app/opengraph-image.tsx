@@ -3,8 +3,7 @@ import { join } from "node:path";
 import { ImageResponse } from "next/og";
 import { hero, site } from "@/content/site";
 
-// Dynamic OG image (§11): wordmark + headline, dark theme. [CONFIRM] swap the
-// wordmark for the logo once /public/brand files are supplied.
+// Dynamic OG image (§11): logo + headline, dark theme.
 export const alt = `${site.name} — ${hero.headline}`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
@@ -14,6 +13,19 @@ export const contentType = "image/png";
 const font = (w: 500 | 600) =>
   readFile(join(process.cwd(), `assets/fonts/inter-latin-${w}-normal.woff`));
 const [medium, semibold] = await Promise.all([font(500), font(600)]);
+
+// Brand mark + wordmark in white, as data URIs for <img>
+const brandSvg = async (name: string) => {
+  const svg = (await readFile(join(process.cwd(), `public/brand/${name}.svg`), "utf8")).replace(
+    'fill="#0a0a0a"',
+    'fill="#ffffff"',
+  );
+  return `data:image/svg+xml;base64,${Buffer.from(svg).toString("base64")}`;
+};
+const [markSrc, wordSrc] = await Promise.all([
+  brandSvg("wow-visual-mark"),
+  brandSvg("wow-visual-wordmark"),
+]);
 
 export default async function Image() {
   return new ImageResponse(
@@ -32,19 +44,11 @@ export default async function Image() {
         fontFamily: "Inter",
       }}
     >
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: 14,
-          fontSize: 30,
-          fontWeight: 600,
-          letterSpacing: "-0.03em",
-        }}
-      >
-        <div style={{ width: 16, height: 16, borderRadius: 3, background: "#d92d20" }} />
-        <span>WOW</span>
-        <span style={{ fontWeight: 500, marginLeft: -6 }}>VISUAL</span>
+      <div style={{ display: "flex", alignItems: "flex-end", gap: 18 }}>
+        {/* eslint-disable-next-line jsx-a11y/alt-text */}
+        <img src={markSrc} width={70} height={80} />
+        {/* eslint-disable-next-line jsx-a11y/alt-text */}
+        <img src={wordSrc} width={218} height={32} style={{ marginBottom: 6 }} />
       </div>
       <div style={{ display: "flex", flexDirection: "column", gap: 28 }}>
         <div

@@ -81,7 +81,7 @@ Filter chips on `/work` are generated from the categories in use. Thumbnails com
 
 **Hero loop:** drop `hero-loop.mp4`, `hero-loop.webm` and `hero-poster.jpg` into `public/video/` (10–15s, ≤4 MB, 1080p).
 
-**Logo:** place `logo-dark.svg`, `logo-light.svg` and `icon.svg` in `public/brand/`, then swap the text wordmark in `components/ui/logo.tsx`, the favicon mark in `lib/icon-mark.tsx`, and the OG image wordmark in `app/opengraph-image.tsx`. Sample the logo's red into `--accent` / `--accent-hover` in `app/globals.css`, then re-run `pnpm a11y` to check contrast.
+**Logo:** the client's logo (deer with clapperboard antlers + stencil wordmark, typeface Ace High BC) is traced to SVG from `fulllogo_transparent_nobuffer.png` in their Drive folder "Wow Visual Logo". It lives in `components/ui/brand.tsx` (inline, `currentColor`) and `public/brand/` (`wow-visual-mark.svg`, `wow-visual-wordmark.svg`, original PNG). Used in the header/menu lockup (`components/ui/logo.tsx`), the footer wordmark, the favicon (`app/icon.svg`, `app/apple-icon.png`) and the share image. If the client sends a vector original (AI/SVG/PDF), re-export those two SVGs from it.
 
 ---
 
@@ -151,15 +151,15 @@ The Performance range spans two machines: the higher numbers are from the Phase 
 
 - Default title/description location; `availableLanguage`; upgrade `Organization` → `LocalBusiness` once an address is confirmed.
 
-**Brand (`app/globals.css`, `components/ui/logo.tsx`, `lib/icon-mark.tsx`, `app/opengraph-image.tsx`)**
+**Brand (`app/globals.css`, `components/ui/brand.tsx`)**
 
-- `--accent` red is a placeholder until sampled from the logo; text wordmark, temporary favicon mark and OG wordmark until logo files arrive.
+- `--accent` red: the logo is black only, so there's no brand colour to sample. Confirm the client is happy with the red accent (CTAs, eyebrow squares) or supply a brand colour.
+- Logo is traced from a 1280px PNG; ask for the vector original if they have one.
 
 ---
 
 ## 5. Known limitations & follow-ups
 
-- No logo files yet, so the site uses a text wordmark and generated favicon.
 - Contact rate limit is in-memory per serverless instance (fine for a low-traffic form; use Upstash/Vercel KV if spam becomes an issue).
 - Page JS is mostly React + Motion + Lenis. If field data shows high INP on low-end phones, the next step is lazy-loading below-the-fold animated sections.
 - Content is structured for i18n (all copy in `/content`) if a BM / Chinese version is wanted later.
