@@ -3,7 +3,7 @@
 import { motion, useMotionValueEvent, useScroll } from "motion/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState, type ReactNode } from "react";
+import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { nav } from "@/content/site";
@@ -19,59 +19,90 @@ export function HeaderClient({ logo, logoOnDark }: { logo: ReactNode; logoOnDark
   const pathname = usePathname();
   const onAnchor = useAnchorNav();
   const { scrollY } = useScroll();
+  const headerRef = useRef<HTMLElement>(null);
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
-  // Pages that open with the dark hero card. Known on the server so the first
-  // paint (and no-JS) uses white text over the hero.
-  const [hasHero, setHasHero] = useState(pathname === "/");
+  // Whether the header sits over the always-dark hero card. Known on the server
+  // for "/" so the first paint (and no-JS) uses white text over the hero.
+  const [onHero, setOnHero] = useState(pathname === "/");
   const [menuOpen, setMenuOpen] = useState(false);
 
-  // Pages with an always-dark hero card mark it with [data-hero]
+  // Pages with an always-dark hero card mark it with [data-hero]. The header
+  // stays in its on-dark style until the card has scrolled out from under it,
+  // so it never shows dark text over the dark hero (both themes).
+  const measure = useCallback(() => {
+    const hero = document.querySelector<HTMLElement>("[data-hero]");
+    const headerH = headerRef.current?.offsetHeight ?? 72;
+    setOnHero(!!hero && hero.getBoundingClientRect().bottom > headerH);
+    setScrolled(window.scrollY > SCROLLED_AT);
+  }, []);
+
   useEffect(() => {
-    const id = requestAnimationFrame(() => {
-      setHasHero(!!document.querySelector("[data-hero]"));
-      setScrolled(window.scrollY > SCROLLED_AT);
-    });
-    return () => cancelAnimationFrame(id);
-  }, [pathname]);
+    const id = requestAnimationFrame(measure);
+    window.addEventListener("resize", measure);
+    return () => {
+      cancelAnimationFrame(id);
+      window.removeEventListener("resize", measure);
+    };
+  }, [pathname, measure]);
 
   useMotionValueEvent(scrollY, "change", (y) => {
     const prev = scrollY.getPrevious() ?? 0;
-    setScrolled(y > SCROLLED_AT);
+    measure();
     if (menuOpen) return;
     setHidden((h) => (y > HIDE_AFTER && y > prev + 2 ? true : y < prev - 2 ? false : h));
   });
 
-  const overHero = hasHero && !scrolled && !menuOpen;
+  const overHero = onHero && !menuOpen;
+  // At rest at the top of the hero, content sits inside the inset card
+  const inset = overHero && !scrolled;
 
   return (
     <>
       <motion.header
+        ref={headerRef}
         initial={false}
         animate={{ y: hidden && !menuOpen ? "-100%" : "0%" }}
         transition={{ duration: 0.4, ease: ease.out }}
         // Show again when keyboard focus lands in the header
         onFocusCapture={() => setHidden(false)}
         className={cn(
-          "fixed inset-x-0 top-0 z-50 border-b transition-[background-color,border-color,color,backdrop-filter] duration-300",
-          scrolled
-            ? "border-border bg-bg/80 text-fg backdrop-blur-xl backdrop-saturate-150"
-            : "border-transparent bg-transparent",
+          "fixed inset-x-0 top-0 z-50 transition-colors duration-300",
           overHero ? "text-white" : "text-fg",
         )}
       >
+        {/* Bar backgrounds: dark glass over the hero, theme glass elsewhere. Each
+            keeps its blur on and only fades opacity, so there's no flash while a
+            backdrop-filter switches on. */}
+        <div
+          aria-hidden
+          className={cn(
+            "absolute inset-0 -z-10 border-b border-white/10 bg-black/45 backdrop-blur-xl backdrop-saturate-150 transition-opacity duration-300",
+            !(scrolled && overHero) && "opacity-0",
+          )}
+        />
+        <div
+          aria-hidden
+          className={cn(
+            "border-border bg-bg/80 absolute inset-0 -z-10 border-b backdrop-blur-xl backdrop-saturate-150 transition-opacity duration-300",
+            !(scrolled && !overHero) && "opacity-0",
+          )}
+        />
         <div
           className={cn(
-            "container-site ease-out-expo flex h-(--header-h) items-center justify-between gap-6 transition-[padding,transform] duration-300",
-            // Sit inside the inset hero card (gutter 8px mobile / 12px desktop)
-            overHero &&
-              "translate-y-2 px-[calc(var(--container-pad)+8px)] md:translate-y-3 md:px-[calc(var(--container-pad)+12px)]",
+            "container-site ease-out-expo flex h-(--header-h) items-center justify-between gap-6 transition-transform duration-500",
+            // Sit inside the inset hero card (gutter 8px mobile / 12px desktop).
+            // Transform-only (with the side groups below) so nothing re-lays out.
+            inset && "translate-y-2 md:translate-y-3",
           )}
         >
           <Link
             href="/"
             aria-label="WOW VISUAL — home"
-            className="-m-2 inline-flex min-h-11 items-center rounded-md p-2"
+            className={cn(
+              "ease-out-expo -m-2 inline-flex min-h-11 items-center rounded-md p-2 transition-transform duration-500",
+              inset && "translate-x-2 md:translate-x-3",
+            )}
             onClick={(e) => {
               if (pathname === "/") {
                 e.preventDefault();
@@ -79,8 +110,21 @@ export function HeaderClient({ logo, logoOnDark }: { logo: ReactNode; logoOnDark
               }
             }}
           >
-            <span className={cn(overHero && "hidden")}>{logo}</span>
-            <span className={cn(!overHero && "hidden")}>{logoOnDark}</span>
+            {/* Crossfade the two wordmarks in step with the bar colours */}
+            <span className="grid [&>*]:col-start-1 [&>*]:row-start-1">
+              <span
+                aria-hidden={overHero}
+                className={cn("transition-opacity duration-300", overHero && "opacity-0")}
+              >
+                {logo}
+              </span>
+              <span
+                aria-hidden={!overHero}
+                className={cn("transition-opacity duration-300", !overHero && "opacity-0")}
+              >
+                {logoOnDark}
+              </span>
+            </span>
           </Link>
 
           <nav aria-label="Main" className="hidden lg:block">
@@ -110,7 +154,12 @@ export function HeaderClient({ logo, logoOnDark }: { logo: ReactNode; logoOnDark
             </ul>
           </nav>
 
-          <div className="flex items-center gap-2">
+          <div
+            className={cn(
+              "ease-out-expo flex items-center gap-2 transition-transform duration-500",
+              inset && "-translate-x-2 md:-translate-x-3",
+            )}
+          >
             <ThemeToggle
               className={cn(overHero && "border-white/25 text-white hover:bg-white/10")}
             />

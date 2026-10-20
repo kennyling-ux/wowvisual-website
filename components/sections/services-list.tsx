@@ -20,19 +20,10 @@ type Service = {
 const previewSrc = (s: Service) =>
   s.image ?? (s.previewYoutubeId ? ytThumb(s.previewYoutubeId) : undefined);
 
-function PreviewFallback() {
-  return (
-    <div className="bg-hero-ink absolute inset-0">
-      <div className="hero-glow" />
-      <div className="hero-grain" />
-    </div>
-  );
-}
-
 /**
  * Numbered service rows (§6.9). Desktop (lg+, fine pointer): row links to the
  * matching work, with a preview that follows the cursor. Below lg: accordion
- * with the preview inside.
+ * with the preview inside. Rows without a preview image show none.
  */
 export function ServicesList({
   items,
@@ -52,6 +43,7 @@ export function ServicesList({
   const sy = useSpring(y, { stiffness: 300, damping: 30, mass: 0.5 });
 
   const hoveredItem = hovered !== null ? items[hovered] : null;
+  const hoveredSrc = hoveredItem ? previewSrc(hoveredItem) : undefined;
 
   return (
     <div
@@ -131,8 +123,8 @@ export function ServicesList({
                     >
                       <div className="flex flex-col gap-5 pb-6 pl-11">
                         <p className="text-fg-muted">{s.description}</p>
-                        <div className="rounded-card relative aspect-video overflow-hidden">
-                          {src ? (
+                        {src && (
+                          <div className="rounded-card relative aspect-video overflow-hidden">
                             <Image
                               src={src}
                               alt=""
@@ -140,10 +132,8 @@ export function ServicesList({
                               sizes="(min-width: 768px) 80vw, 100vw"
                               className="object-cover saturate-[0.9]"
                             />
-                          ) : (
-                            <PreviewFallback />
-                          )}
-                        </div>
+                          </div>
+                        )}
                         <Link
                           href={href}
                           className="inline-flex min-h-11 w-fit items-center gap-2 font-medium"
@@ -163,7 +153,7 @@ export function ServicesList({
 
       {/* Cursor-following preview (desktop, mouse only; hidden under reduced motion) */}
       <AnimatePresence>
-        {hoveredItem && (
+        {hoveredSrc && (
           <motion.div
             aria-hidden
             className="rounded-card pointer-events-none fixed top-0 left-0 z-30 hidden aspect-[4/3] w-[300px] overflow-hidden shadow-2xl motion-reduce:!hidden lg:block"
@@ -182,17 +172,13 @@ export function ServicesList({
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.4, ease: ease.out }}
               >
-                {previewSrc(hoveredItem) ? (
-                  <Image
-                    src={previewSrc(hoveredItem)!}
-                    alt=""
-                    fill
-                    sizes="300px"
-                    className="object-cover saturate-[0.9]"
-                  />
-                ) : (
-                  <PreviewFallback />
-                )}
+                <Image
+                  src={hoveredSrc}
+                  alt=""
+                  fill
+                  sizes="300px"
+                  className="object-cover saturate-[0.9]"
+                />
               </motion.div>
             </AnimatePresence>
           </motion.div>
