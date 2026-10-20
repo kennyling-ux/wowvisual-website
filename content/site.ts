@@ -88,12 +88,22 @@ export const about = {
 
 /**
  * Image strip (§6.6) — 4–6 behind-the-scenes stills / frames, 3:4, in /public/images.
- * [CONFIRM] Until real stills are supplied, cinematic placeholder frames are shown
- * (decorative, no claims). Add items as { src: "/images/bts-01.jpg", alt: "…" }.
+ * [CONFIRM] Frames from the studio's own YouTube uploads (maxresdefault, no
+ * letterbox; centre-cropped to 3:4) until real behind-the-scenes stills are supplied.
+ * Swap for { src: "/images/bts-01.jpg", alt: "…" }. Empty array → placeholder frames.
  */
+const ytFrame = (id: string) => `https://i.ytimg.com/vi/${id}/maxresdefault.jpg`;
+
 export const imageStrip = {
   label: "Behind the scenes",
-  images: [] as { src: string; alt: string }[],
+  images: [
+    { src: ytFrame("JelKR6v1gds"), alt: "A guest holds up a promotional card at a mall activation" },
+    { src: ytFrame("KVhPVFlqm2U"), alt: "Two women smile beside a stall stacked with durians" },
+    { src: ytFrame("M0-OHeIOVcU"), alt: "A guest laughs under purple stage lighting at a corporate event" },
+    { src: ytFrame("c6Plte9EpEE"), alt: "An audience member applauds at an awards night" },
+    { src: ytFrame("o7Na8Xala-4"), alt: "A child dances on the track at a school sports day" },
+    { src: ytFrame("s2hef-bCteA"), alt: "A traveller poses with a panda plush on a group tour" },
+  ] as { src: string; alt: string }[],
   placeholderCount: 6,
 };
 

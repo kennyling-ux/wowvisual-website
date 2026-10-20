@@ -124,7 +124,7 @@ The Performance range spans two machines: the higher numbers are from the Phase 
 - Showreel YouTube ID (empty) and hero loop video files.
 - Trust strip client logos: none supplied, so the section is hidden. Never invent brands.
 - "About the studio" link points to Services (no About page in v1).
-- Image-strip stills: placeholder cinematic frames.
+- Image-strip stills: now 6 frames from the studio's own YouTube uploads (centre-cropped 3:4). Swap for real behind-the-scenes photos when available.
 - **Stats: all numbers and descriptions.**
 - Services list, order and descriptions.
 - Process step descriptions.
