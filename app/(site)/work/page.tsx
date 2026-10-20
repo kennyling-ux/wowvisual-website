@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 import { Eyebrow } from "@/components/ui/eyebrow";
 import { SplitHeadline } from "@/components/ui/split-headline";
-import { Reveal } from "@/components/ui/reveal";
+import { CssReveal } from "@/components/ui/css-reveal";
 import { PlayCursor } from "@/components/work/play-cursor";
 import { WorkBrowser, WorkBrowserWithParams } from "@/components/work/work-browser";
 import { usedCategories, work, workCopy } from "@/content/work";
@@ -18,19 +18,20 @@ export default function WorkPage() {
     <div className="container-site pt-[calc(var(--header-h)+clamp(48px,8vw,112px))] pb-(--section-pad)">
       <header className="mb-10 grid gap-6 md:mb-16 lg:grid-cols-12 lg:items-end">
         <div className="lg:col-span-7">
-          <Reveal>
+          <CssReveal>
             <Eyebrow>{work.length} films</Eyebrow>
-          </Reveal>
+          </CssReveal>
           <SplitHeadline
             as="h1"
             trigger="mount"
+            delay={0.08}
             text={workCopy.page.title}
             className="text-display mt-5"
           />
         </div>
-        <Reveal delay={0.3} className="lg:col-span-5">
+        <CssReveal delay={0.35} className="lg:col-span-5">
           <p className="text-body-l text-fg-muted max-w-[44ch]">{workCopy.page.intro}</p>
-        </Reveal>
+        </CssReveal>
       </header>
 
       {/* Static "All" grid is prerendered; the URL-aware version takes over on the client */}

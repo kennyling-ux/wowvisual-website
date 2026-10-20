@@ -49,7 +49,7 @@ export function Marquee({
   const { scrollY } = useScroll();
   const velocity = useVelocity(scrollY);
   const smooth = useSpring(velocity, { damping: 50, stiffness: 300 });
-  const factor = useTransform(smooth, [-2000, 0, 2000], [-4, 0, 4], { clamp: false });
+  const factor = useTransform(smooth, [-2500, 0, 2500], [-2.5, 0, 2.5]);
 
   useAnimationFrame((_, delta) => {
     if (reduce || paused || !trackRef.current) return;
@@ -60,7 +60,7 @@ export function Marquee({
       const f = factor.get();
       if (f < 0) direction.current = reverse ? -1 : 1;
       else if (f > 0) direction.current = reverse ? 1 : -1;
-      move += direction.current * Math.abs(f) * speed * 0.6 * (delta / 1000);
+      move += direction.current * Math.abs(f) * speed * 0.5 * (delta / 1000);
     }
     x.set(wrap(-half, 0, x.get() + move));
   });

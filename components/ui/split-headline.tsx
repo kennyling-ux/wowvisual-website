@@ -17,6 +17,9 @@ type SplitHeadlineProps = {
 /**
  * Word-by-word mask reveal (§9). Real text stays accessible via aria-label;
  * the split spans are aria-hidden.
+ *
+ * trigger="mount" (above the fold) runs on CSS keyframes from first paint, so the
+ * headline never waits for hydration; trigger="view" uses Motion's whileInView.
  */
 export function SplitHeadline({
   text,
@@ -27,10 +30,28 @@ export function SplitHeadline({
   id,
 }: SplitHeadlineProps) {
   const words = text.split(" ");
-  const animateProps =
-    trigger === "mount"
-      ? { initial: "hidden", animate: "visible" }
-      : { initial: "hidden", whileInView: "visible", viewport };
+
+  if (trigger === "mount") {
+    return createElement(
+      as,
+      { "aria-label": text, className, id },
+      <span aria-hidden className="block">
+        {words.map((word, i) => (
+          <Fragment key={i}>
+            <span className="-mb-[0.2em] inline-block overflow-hidden pb-[0.2em] align-bottom">
+              <span
+                className="word-rise"
+                style={{ animationDelay: `${Math.round((delay + i * stagger.base) * 1000)}ms` }}
+              >
+                {word}
+              </span>
+            </span>
+            {i < words.length - 1 && " "}
+          </Fragment>
+        ))}
+      </span>,
+    );
+  }
 
   return createElement(
     as,
@@ -39,7 +60,9 @@ export function SplitHeadline({
       aria-hidden
       className="block"
       variants={staggerContainer(stagger.base, delay)}
-      {...animateProps}
+      initial="hidden"
+      whileInView="visible"
+      viewport={viewport}
     >
       {words.map((word, i) => (
         <Fragment key={i}>

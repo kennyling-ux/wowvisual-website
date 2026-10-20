@@ -16,6 +16,11 @@ cp .env.example .env.local
 pnpm dev
 ```
 
+> **Dev tip:** this project lives in a folder whose path contains `[` `]` brackets.
+> Turbopack's watcher can miss edits to `app/globals.css` there — if a CSS change
+> doesn't show up in `pnpm dev`, stop it, delete `.next/dev` and start it again.
+> Production builds are unaffected.
+
 ## Scripts
 
 - `pnpm build` / `pnpm lint` / `pnpm typecheck` — must pass before every push

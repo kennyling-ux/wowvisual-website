@@ -3,7 +3,7 @@ import path from "node:path";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Eyebrow } from "@/components/ui/eyebrow";
-import { Reveal } from "@/components/ui/reveal";
+import { CssReveal } from "@/components/ui/css-reveal";
 import { SplitHeadline } from "@/components/ui/split-headline";
 import { hero, site } from "@/content/site";
 import { HeroFrame } from "./hero-frame";
@@ -35,10 +35,10 @@ function HeroBackground() {
       {hasVideo && <HeroVideo mp4={media.mp4} webm={media.webm} poster={media.poster} />}
       {/* [CONFIRM] Fallback until the showreel loop is supplied */}
       {!hasVideo && !media.poster && (
-        <>
+        <div className="animate-fade-from-black absolute inset-0">
           <div className="hero-glow" />
           <div className="hero-sweep" />
-        </>
+        </div>
       )}
       <div className="hero-grain" />
     </>
@@ -51,19 +51,19 @@ export function Hero() {
       <div className="container-site relative flex flex-1 flex-col pt-[calc(var(--header-h)+2rem)]">
         <div className="mt-auto grid gap-8 pb-8 md:pb-10 xl:grid-cols-12 xl:items-end xl:gap-10">
           <div className="xl:col-span-8">
-            <Reveal>
+            <CssReveal delay={0.1}>
               <Eyebrow tone="onDark">{hero.eyebrow}</Eyebrow>
-            </Reveal>
+            </CssReveal>
             <SplitHeadline
               as="h1"
               trigger="mount"
-              delay={0.15}
+              delay={0.2}
               text={hero.headline}
               className="text-display mt-5 max-w-[13ch] md:mt-6"
             />
           </div>
-          <Reveal
-            delay={0.5}
+          <CssReveal
+            delay={0.45}
             className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between lg:gap-10 xl:col-span-4 xl:flex-col xl:items-start xl:justify-end xl:gap-6 xl:pb-2"
           >
             <p className="text-body-l max-w-[38ch] text-white/75">{hero.intro}</p>
@@ -80,10 +80,10 @@ export function Hero() {
                 {hero.secondaryCta.label}
               </Button>
             </div>
-          </Reveal>
+          </CssReveal>
         </div>
 
-        <Reveal delay={0.7}>
+        <CssReveal delay={0.65}>
           <ul
             aria-label="How we work"
             className="grid grid-cols-2 gap-x-4 gap-y-2 border-t border-white/15 py-5 sm:grid-cols-4 md:py-6"
@@ -97,7 +97,7 @@ export function Hero() {
               </li>
             ))}
           </ul>
-        </Reveal>
+        </CssReveal>
       </div>
     </HeroFrame>
   );
