@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useReducedMotion } from "motion/react";
+import { motion } from "motion/react";
 import type { ReactNode } from "react";
 import { fadeUp, staggerContainer, viewport } from "@/lib/motion";
 
@@ -13,12 +13,8 @@ type RevealProps = {
 
 /** Fade up 24px + blur 4px → 0 when scrolled into view (once). */
 export function Reveal({ children, className, delay = 0, as = "div" }: RevealProps) {
-  const reduce = useReducedMotion();
+  // Same markup on server and client; reduced motion is handled in CSS ([data-reveal])
   const Tag = motion[as];
-  if (reduce) {
-    const Plain = as;
-    return <Plain className={className}>{children}</Plain>;
-  }
   return (
     <Tag
       data-reveal

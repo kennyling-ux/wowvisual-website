@@ -21,6 +21,9 @@
   --accent-text: #b42318;
   --on-accent: #ffffff;
 
+  /* Hero card is always dark with white text, in both themes (§4.2) */
+  --hero-ink: #0b0b0b;
+
   --radius-card: 16px;
   --container-pad: clamp(16px, 4vw, 48px);
   --section-pad: clamp(80px, 12vw, 160px);
@@ -60,6 +63,7 @@
   --color-accent-hover: var(--accent-hover);
   --color-accent-text: var(--accent-text);
   --color-on-accent: var(--on-accent);
+  --color-hero-ink: var(--hero-ink);
 
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
 
@@ -194,6 +198,97 @@
   animation-direction: var(--marquee-direction, normal);
 }
 
+/* ── Hero fallback background (no showreel loop yet) ─────── */
+/* Warm cinematic light + slow drift + film grain (§6.2 fallback) */
+.hero-glow {
+  position: absolute;
+  inset: -20%;
+  background:
+    radial-gradient(
+      34% 42% at 82% 22%,
+      color-mix(in oklab, #ff7a3d 55%, transparent),
+      transparent 70%
+    ),
+    radial-gradient(
+      26% 32% at 70% 34%,
+      color-mix(in oklab, var(--accent) 65%, transparent),
+      transparent 72%
+    ),
+    radial-gradient(
+      40% 40% at 12% 95%,
+      color-mix(in oklab, var(--accent) 45%, transparent),
+      transparent 70%
+    ),
+    radial-gradient(22% 26% at 90% 8%, rgb(255 236 214 / 0.22), transparent 70%);
+  filter: blur(28px);
+  animation: hero-drift 22s var(--ease-in-out-film) infinite alternate;
+}
+
+.hero-sweep {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 35%,
+    rgb(255 255 255 / 0.05) 48%,
+    transparent 60%
+  );
+  background-size: 250% 100%;
+  animation: hero-sweep 14s linear infinite;
+}
+
+.hero-grain {
+  position: absolute;
+  inset: -50%;
+  opacity: 0.09;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: hero-grain 0.9s steps(6) infinite;
+  pointer-events: none;
+}
+
+@keyframes hero-drift {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(4%, -3%, 0) scale(1.06);
+  }
+  100% {
+    transform: translate3d(-3%, 2%, 0) scale(1.02);
+  }
+}
+
+@keyframes hero-sweep {
+  from {
+    background-position: 120% 0;
+  }
+  to {
+    background-position: -120% 0;
+  }
+}
+
+@keyframes hero-grain {
+  0% {
+    transform: translate(0, 0);
+  }
+  20% {
+    transform: translate(-6%, 4%);
+  }
+  40% {
+    transform: translate(5%, -7%);
+  }
+  60% {
+    transform: translate(-3%, 8%);
+  }
+  80% {
+    transform: translate(7%, 2%);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
 /* ── Page fade (§9) ───────────────────────────────────────── */
 @keyframes page-in {
   from {
@@ -229,6 +324,13 @@ html.lenis body {
 
 /* ── Reduced motion (§9) ──────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
+  /* Reveal targets render in their final state immediately — even before hydration */
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+  }
+
   *,
   *::before,
   *::after {

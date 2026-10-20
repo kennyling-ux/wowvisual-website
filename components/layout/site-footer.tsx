@@ -12,7 +12,7 @@ export function SiteFooter() {
     <footer className="border-border bg-bg border-t">
       <div className="container-site pt-16 pb-24 md:pt-24 md:pb-8">
         <div className="grid grid-cols-2 gap-x-6 gap-y-12 md:grid-cols-4 lg:grid-cols-12 lg:gap-8">
-          <div className="col-span-2 flex flex-col gap-5 md:col-span-4 lg:col-span-5">
+          <div className="col-span-2 flex flex-col gap-5 md:col-span-4 lg:col-span-4">
             <Link href="/" aria-label="WOW VISUAL — home" className="-m-2 inline-flex w-fit p-2">
               <Logo />
             </Link>
@@ -32,7 +32,7 @@ export function SiteFooter() {
             </ul>
           </nav>
 
-          <div className="order-last col-span-2 lg:order-none lg:col-span-3">
+          <div className="order-last col-span-2 lg:order-none lg:col-span-4">
             <h2 className="text-label text-fg mb-3">Contact</h2>
             <ul className="flex flex-col">
               <li className="text-fg py-2 md:py-1">{site.contact.person}</li>
@@ -48,7 +48,10 @@ export function SiteFooter() {
                 </a>
               </li>
               <li>
-                <a href={`mailto:${site.contact.email}`} className={`${linkClass} break-all`}>
+                <a
+                  href={`mailto:${site.contact.email}`}
+                  className={`${linkClass} [overflow-wrap:anywhere]`}
+                >
                   {site.contact.email}
                 </a>
               </li>

@@ -1,9 +1,10 @@
-import { Button } from "@/components/ui/button";
 import { Eyebrow } from "@/components/ui/eyebrow";
 import { Section } from "@/components/ui/section";
-import { nav, site } from "@/content/site";
+import { Hero } from "@/components/sections/hero";
+import { MarqueeStrip } from "@/components/sections/marquee-strip";
+import { TrustStrip } from "@/components/sections/trust-strip";
 
-// TEMPORARY scaffold for Phase 2 (layout testing). Sections are replaced in Phases 3–7.
+// TEMPORARY anchor stubs — replaced in Phases 4–7.
 const stubs = [
   { id: "about", eyebrow: "Who we are", title: "About" },
   { id: "services", eyebrow: "Services", title: "What we make" },
@@ -14,23 +15,10 @@ const stubs = [
 export default function Home() {
   return (
     <>
-      <div className="p-2 md:p-3">
-        <section
-          data-hero
-          className="rounded-card relative flex min-h-[80svh] flex-col justify-end overflow-hidden bg-[#0b0b0b] text-white md:min-h-[88vh]"
-        >
-          <div
-            aria-hidden
-            className="absolute inset-0 bg-[radial-gradient(70%_90%_at_15%_100%,rgba(217,45,32,0.35),transparent_60%),radial-gradient(50%_70%_at_85%_10%,rgba(255,255,255,0.08),transparent_60%)]"
-          />
-          <div className="container-site relative pb-10 md:pb-14">
-            <Eyebrow tone="onDark">Video Production Studio · {site.location}</Eyebrow>
-            <h1 className="text-display mt-6 max-w-[12ch]">Visuals that make people say wow.</h1>
-            <div className="mt-10 flex flex-wrap gap-3">
-              <Button href={nav.cta.href}>{nav.cta.label}</Button>
-            </div>
-          </div>
-        </section>
+      <Hero />
+      <TrustStrip />
+      <div className="pt-10 md:pt-16">
+        <MarqueeStrip />
       </div>
 
       {stubs.map((s) => (

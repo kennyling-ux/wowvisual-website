@@ -21,7 +21,9 @@ export function HeaderClient({ logo, logoOnDark }: { logo: ReactNode; logoOnDark
   const { scrollY } = useScroll();
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
-  const [hasHero, setHasHero] = useState(false);
+  // Pages that open with the dark hero card. Known on the server so the first
+  // paint (and no-JS) uses white text over the hero.
+  const [hasHero, setHasHero] = useState(pathname === "/");
   const [menuOpen, setMenuOpen] = useState(false);
 
   // Pages with an always-dark hero card mark it with [data-hero]
