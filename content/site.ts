@@ -237,6 +237,74 @@ export const finalCta = {
   email: "Email us",
 } as const;
 
+/** Contact section + form (§6.13). */
+export const contact = {
+  id: "contact",
+  eyebrow: "Contact",
+  title: "Start a project",
+  intro: "Tell us what you're making. The more we know, the sharper our first reply.", // [CONFIRM]
+  direct: {
+    heading: "Talk to us directly",
+    personLabel: "Your contact",
+    whatsappLabel: "WhatsApp",
+    emailLabel: "Email",
+  },
+  fields: {
+    name: { label: "Name", placeholder: "Your full name" },
+    company: { label: "Company", placeholder: "Optional" },
+    email: { label: "Email", placeholder: "name@company.com" },
+    phone: { label: "Phone / WhatsApp", placeholder: "+60 12-345 6789" },
+    service: { label: "Service", placeholder: "Choose a service" },
+    budget: { label: "Budget range", placeholder: "Choose a range" },
+    message: {
+      label: "Project details",
+      placeholder: "What are you making, for whom, and by when?",
+    },
+    consent: {
+      before:
+        "I agree to WOW VISUAL processing my details to reply to this enquiry, as described in the",
+      link: "privacy notice",
+      after: ".",
+    },
+    required: "required",
+  },
+  serviceOptions: [
+    "TVC & commercial video",
+    "Corporate & brand films",
+    "Event coverage & highlights",
+    "Social media content",
+    "Motion graphics & animation",
+    "Product & lifestyle photography",
+    "Something else / not sure",
+  ],
+  budgetOptions: ["Below RM5k", "RM5k–15k", "RM15k–50k", "RM50k+", "Not sure yet"], // [CONFIRM] ranges
+  errors: {
+    name: "Please tell us your name.",
+    email: "Enter a valid email, e.g. name@company.com",
+    phone: "Enter a phone number we can reach you on.",
+    message: "Tell us a little about the project (at least 10 characters).",
+    consent: "Please agree so we can reply to you.",
+  },
+  submit: "Send enquiry",
+  sending: "Sending…",
+  success: {
+    title: "Message sent",
+    body: (name: string) => `Thanks, ${name} — we'll be in touch within 1 working day.`, // [CONFIRM] response time
+    again: "Send another message",
+  },
+  failure: {
+    title: "We couldn't send that just now",
+    body: "Your message is ready to go on WhatsApp instead — it opens with everything you wrote.",
+    unavailableTitle: "Send it on WhatsApp",
+    unavailableBody:
+      "Our email form is being set up. WhatsApp opens with your message ready to send.",
+    rateLimited:
+      "You've sent a few messages in a short time. Please try again in a few minutes, or use WhatsApp.",
+    cta: "Send via WhatsApp",
+    retry: "Try again",
+  },
+} as const;
+
 export const footer = {
   tagline: "Commercials, corporate films, events and social content from Kuala Lumpur.", // [CONFIRM]
   backToTop: "Back to top",

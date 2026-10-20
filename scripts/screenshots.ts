@@ -11,7 +11,7 @@ import path from "node:path";
 
 const WIDTHS = [375, 768, 1024, 1440] as const;
 const THEMES = ["light", "dark"] as const;
-const DEFAULT_ROUTES = ["/", "/work"];
+const DEFAULT_ROUTES = ["/", "/work", "/privacy", "/this-page-does-not-exist"];
 
 async function main() {
   const [baseArg, ...routeArgs] = process.argv.slice(2);
@@ -39,6 +39,7 @@ async function main() {
       const page = await context.newPage();
 
       for (const route of routes) {
+        // 404 route returns a 404 status — that's expected
         await page.goto(new URL(route, base).toString(), { waitUntil: "networkidle" });
         // Scroll through so whileInView / lazy content renders, then return to top
         await page.evaluate(async () => {
