@@ -11,7 +11,7 @@ import path from "node:path";
 
 const WIDTHS = [375, 768, 1024, 1440] as const;
 const THEMES = ["light", "dark"] as const;
-const DEFAULT_ROUTES = ["/"];
+const DEFAULT_ROUTES = ["/", "/work"];
 
 async function main() {
   const [baseArg, ...routeArgs] = process.argv.slice(2);

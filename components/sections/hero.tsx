@@ -8,6 +8,7 @@ import { SplitHeadline } from "@/components/ui/split-headline";
 import { hero, site } from "@/content/site";
 import { HeroFrame } from "./hero-frame";
 import { HeroVideo } from "./hero-video";
+import { ShowreelButton } from "./showreel-button";
 
 const publicPath = (p: string) => path.join(process.cwd(), "public", p);
 const media = {
@@ -45,10 +46,6 @@ function HeroBackground() {
 }
 
 export function Hero() {
-  const showreel = hero.showreelYoutubeId
-    ? `https://www.youtube.com/watch?v=${hero.showreelYoutubeId}`
-    : site.socials[0].href;
-
   return (
     <HeroFrame background={<HeroBackground />}>
       <div className="container-site relative flex flex-1 flex-col pt-[calc(var(--header-h)+2rem)]">
@@ -71,10 +68,14 @@ export function Hero() {
           >
             <p className="text-body-l max-w-[38ch] text-white/75">{hero.intro}</p>
             <div className="flex shrink-0 flex-wrap gap-3">
-              {/* Phase 5: opens the video modal when showreelYoutubeId is set */}
-              <Button href={showreel} external>
-                {hero.primaryCta.label}
-              </Button>
+              {hero.showreelYoutubeId ? (
+                <ShowreelButton youtubeId={hero.showreelYoutubeId} label={hero.primaryCta.label} />
+              ) : (
+                // [CONFIRM] No showreel ID yet — open the YouTube channel instead
+                <Button href={site.socials[0].href} external>
+                  {hero.primaryCta.label}
+                </Button>
+              )}
               <Button href={hero.secondaryCta.href} variant="inverse">
                 {hero.secondaryCta.label}
               </Button>
