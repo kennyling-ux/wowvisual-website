@@ -1,5 +1,5 @@
 import { Clock, Mail, User } from "lucide-react";
-import { ContactForm } from "@/components/contact/contact-form";
+import { LazyContactForm } from "@/components/contact/lazy-contact-form";
 import { Eyebrow } from "@/components/ui/eyebrow";
 import { Reveal } from "@/components/ui/reveal";
 import { Section } from "@/components/ui/section";
@@ -90,7 +90,7 @@ export function ContactSection() {
 
         <Reveal className="min-w-0 lg:col-span-7">
           <div className="rounded-card border-border bg-surface border p-5 sm:p-8 md:p-10">
-            <ContactForm />
+            <LazyContactForm />
           </div>
         </Reveal>
       </div>

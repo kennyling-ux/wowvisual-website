@@ -2,7 +2,7 @@
  * UX Quality Gate screenshots (§10.1).
  * Usage: pnpm screenshots [baseUrl] [route ...]
  *   pnpm screenshots                         -> http://localhost:3000, default routes
- *   pnpm screenshots http://localhost:3000 /styleguide
+ *   pnpm screenshots http://localhost:3000 /work
  * Output: /screenshots/{route}-{width}-{theme}.png + -fold.png (git-ignored)
  */
 import { chromium } from "@playwright/test";

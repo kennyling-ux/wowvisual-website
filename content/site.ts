@@ -287,6 +287,7 @@ export const contact = {
   },
   submit: "Send enquiry",
   sending: "Sending…",
+  loading: "Loading form…",
   success: {
     title: "Message sent",
     body: (name: string) => `Thanks, ${name} — we'll be in touch within 1 working day.`, // [CONFIRM] response time

@@ -34,6 +34,8 @@ async function main() {
           }
           window.scrollTo(0, 0);
         });
+        // The contact form is lazy-loaded near the viewport; audit it once mounted.
+        if (await page.locator("#contact").count()) await page.locator("#contact form").waitFor();
         await page.waitForTimeout(300);
         const results = await new AxeBuilder({ page })
           .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa", "best-practice"])
