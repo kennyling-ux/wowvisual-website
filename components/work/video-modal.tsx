@@ -8,7 +8,8 @@ import { workCopy } from "@/content/work";
 import { ease } from "@/lib/motion";
 import { useFocusTrap } from "@/lib/use-focus-trap";
 import { useScrollLock } from "@/lib/use-scroll-lock";
-import { ytEmbed, ytThumb } from "@/lib/youtube";
+import { useYtThumb } from "@/lib/use-yt-thumb";
+import { ytEmbed } from "@/lib/youtube";
 
 type OpenArgs = { youtubeId: string; title: string; origin?: DOMRect | null };
 type State = OpenArgs & { from: { x: number; y: number; scale: number } };
@@ -37,6 +38,7 @@ function panelWidth() {
 export function VideoModalProvider({ children }: { children: ReactNode }) {
   const [state, setState] = useState<State | null>(null);
   const [loaded, setLoaded] = useState(false);
+  const thumb = useYtThumb(state?.youtubeId ?? "");
   const ref = useRef<HTMLDivElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
 
@@ -122,13 +124,16 @@ export function VideoModalProvider({ children }: { children: ReactNode }) {
                 transition={{ duration: 0.55, ease: ease.out }}
               >
                 {/* Facade: thumbnail + spinner until the player is ready */}
-                <Image
-                  src={ytThumb(state.youtubeId)}
-                  alt=""
-                  fill
-                  sizes="(min-width: 1280px) 1280px, 100vw"
-                  className={`object-cover transition-opacity duration-500 ${loaded ? "opacity-0" : "opacity-100"}`}
-                />
+                {thumb.src && (
+                  <Image
+                    src={thumb.src}
+                    alt=""
+                    fill
+                    sizes="(min-width: 1280px) 1280px, 100vw"
+                    onError={thumb.onError}
+                    className={`object-cover transition-opacity duration-500 ${loaded ? "opacity-0" : "opacity-100"}`}
+                  />
+                )}
                 {!loaded && (
                   <div
                     className="absolute inset-0 grid place-items-center bg-black/30"

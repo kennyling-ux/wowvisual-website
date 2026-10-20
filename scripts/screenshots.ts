@@ -20,7 +20,7 @@ async function main() {
   const outDir = path.join(process.cwd(), "screenshots");
   await mkdir(outDir, { recursive: true });
 
-  const browser = await chromium.launch();
+  const browser = await chromium.launch({ executablePath: process.env.CHROMIUM_PATH });
   const issues: string[] = [];
 
   for (const theme of THEMES) {

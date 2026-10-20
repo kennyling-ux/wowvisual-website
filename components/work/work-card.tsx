@@ -2,10 +2,9 @@
 
 import { Play } from "lucide-react";
 import Image from "next/image";
-import { useState } from "react";
 import { workCopy, type WorkItem } from "@/content/work";
 import { cn } from "@/lib/cn";
-import { ytThumb } from "@/lib/youtube";
+import { useYtThumb } from "@/lib/use-yt-thumb";
 import { useVideoModal } from "./video-modal";
 
 /** 16:9 video card (§6.8): thumbnail, play button, title over the frame, category tag. */
@@ -21,7 +20,7 @@ export function WorkCard({
   priority?: boolean;
 }) {
   const open = useVideoModal();
-  const [src, setSrc] = useState(item.thumbnail ?? ytThumb(item.youtubeId));
+  const thumb = useYtThumb(item.youtubeId, item.thumbnail);
 
   return (
     <button
@@ -36,15 +35,17 @@ export function WorkCard({
       }
       className="group/card rounded-card bg-hero-ink relative block aspect-video w-full overflow-hidden text-left text-white"
     >
-      <Image
-        src={src}
-        alt=""
-        fill
-        sizes={sizes}
-        priority={priority}
-        onError={() => setSrc(ytThumb(item.youtubeId, "hqdefault"))}
-        className="ease-out-expo object-cover saturate-[0.9] transition-transform duration-700 group-hover/card:scale-[1.04]"
-      />
+      {thumb.src && (
+        <Image
+          src={thumb.src}
+          alt=""
+          fill
+          sizes={sizes}
+          priority={priority}
+          onError={thumb.onError}
+          className="ease-out-expo object-cover saturate-[0.9] transition-transform duration-700 group-hover/card:scale-[1.04]"
+        />
+      )}
       {/* Overlay: always-on bottom gradient for the title; darkens on hover */}
       <span
         aria-hidden

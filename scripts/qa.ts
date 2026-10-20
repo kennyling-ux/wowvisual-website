@@ -9,7 +9,7 @@ const ROUTES = ["/", "/work", "/privacy", "/this-page-does-not-exist"];
 
 async function main() {
   const base = process.argv[2] ?? "http://localhost:3000";
-  const browser = await chromium.launch();
+  const browser = await chromium.launch({ executablePath: process.env.CHROMIUM_PATH });
   let failures = 0;
 
   // 1. No horizontal scroll at 320px
