@@ -3,35 +3,38 @@
 Built by Brewdes for **WOW VISUAL SDN. BHD.** Spec: `CLAUDE.md`.
 
 - **Repo:** https://github.com/kennyling-ux/wowvisual-website
-- **Live URL:** https://wowvisual.my _(after the Vercel import + DNS steps below)_
+- **Live URL:** https://wowvisual.my _(once the Hostinger DNS records below are set)_
+- **Vercel URL (live now):** https://wowvisual-website.vercel.app
+- **Vercel project:** `kennyling-uxs-projects/wowvisual-website` (connected to GitHub: every push to `main` deploys production; other branches get preview URLs)
 
 ---
 
 ## 1. Go live (Kenny)
 
-### 1.1 Vercel
+### 1.1 Vercel: done, except the Resend key
 
-1. Merge this branch into `main`.
-2. Vercel → **Add New → Project** → import `kennyling-ux/wowvisual-website`. Vercel detects Next.js and pnpm; keep the defaults.
-3. **Settings → Environment Variables** (Production + Preview):
+Already set up from the CLI:
 
-   | Variable               | Value                                                       |
-   | ---------------------- | ----------------------------------------------------------- |
-   | `RESEND_API_KEY`       | from resend.com (leave empty → form falls back to WhatsApp) |
-   | `CONTACT_TO_EMAIL`     | `wowvisualofficial@gmail.com`                               |
-   | `CONTACT_FROM_EMAIL`   | `hello@wowvisual.my` (must be on a Resend-verified domain)  |
-   | `NEXT_PUBLIC_SITE_URL` | `https://wowvisual.my`                                      |
+- Project created, linked to the GitHub repo, production deployed from `main`.
+- Environment variables set: `CONTACT_TO_EMAIL`, `CONTACT_FROM_EMAIL` (Production + Preview), `NEXT_PUBLIC_SITE_URL=https://wowvisual.my` (Production).
+- Domains `wowvisual.my` and `www.wowvisual.my` attached to the project.
 
-4. Deploy. From then on every push to `main` deploys production; other branches get preview URLs.
+Still to do:
+
+1. **`RESEND_API_KEY`**: create a key at resend.com, then Vercel → Project → **Settings → Environment Variables** → add it for Production (+ Preview if wanted) and redeploy. Until then the form shows the WhatsApp fallback with the message prefilled (verified on production: the API answers `503 email_unavailable`).
+2. Vercel → Project → **Settings → Domains**: set `wowvisual.my` as primary and make `www.wowvisual.my` redirect to it.
 
 ### 1.2 Domain (Hostinger → Vercel)
 
-1. Vercel → Project → **Settings → Domains** → add `wowvisual.my` and `www.wowvisual.my`; make `wowvisual.my` primary and redirect `www` to it.
-2. Hostinger hPanel → Domains → wowvisual.my → **DNS records**: delete any parking `A` record on `@` and `CNAME` on `www`, then add what Vercel shows — typically:
+Right now `wowvisual.my` and `www` still resolve to Hostinger parking (`2.57.91.91`, nameservers `*.dns-parking.com`).
+
+1. Hostinger hPanel → Domains → wowvisual.my → **DNS records**: delete the parking `A` record on `@` and the `CNAME` on `www`, then add:
    - `A` `@` → `76.76.21.21`
    - `CNAME` `www` → `cname.vercel-dns.com`
-3. Resend → **Domains** → add `wowvisual.my` and copy its SPF/DKIM `TXT` (and send-subdomain `MX`) records into the same Hostinger panel. **Don't touch existing MX records** if the client uses Hostinger email.
-4. Wait for propagation; Vercel issues SSL automatically.
+
+   (These are what Vercel asked for on 2026-10-21. If the Domains page shows different values, use those.)
+2. Resend → **Domains** → add `wowvisual.my` and copy its SPF/DKIM `TXT` (and send-subdomain `MX`) records into the same Hostinger panel. **Don't touch existing MX records** if the client uses Hostinger email.
+3. Wait for propagation; Vercel issues SSL automatically and emails you when the domain verifies.
 
 ### 1.3 Launch checks (on the live URL)
 
@@ -76,6 +79,17 @@ Filter chips on `/work` are generated from the categories in use. Thumbnails com
 ---
 
 ## 3. Quality results
+
+**Live (production on Vercel, 2026-10-21)**, Lighthouse 12 mobile against https://wowvisual-website.vercel.app:
+
+| Page  | Perf | A11y | Best Pr. | SEO | LCP  | CLS | TBT   |
+| ----- | ---- | ---- | -------- | --- | ---- | --- | ----- |
+| Home  | 93   | 100  | 100      | 100 | 3.0s | 0   | 50 ms |
+| /work | 99   | 100  | 100      | 100 | 1.8s | 0   | 20 ms |
+
+Re-run PageSpeed Insights on https://wowvisual.my after DNS switches over; that's the score of record.
+
+Earlier local runs, on production builds:
 
 Measured on production builds (`pnpm build && pnpm start`), Lighthouse mobile (simulated Moto G, 4× CPU throttle):
 
